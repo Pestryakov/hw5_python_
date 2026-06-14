@@ -2,13 +2,21 @@ import file_manager
 import quiz
 import bank
 
-AUTHOR = {
+AUTHOR_INFO = {
     'name': 'Максим Пестряков',
     'role': 'Python-разработчик',
     'contact': 'pestriakovm@gmail.com',
 }
 
-def show_menu():
+def show_author() -> None:
+    """Выводит информацию об авторе программы."""
+    print(f'\n--- Создатель программы ---')
+    print(f'Имя:      {AUTHOR_INFO["name"]}')
+    print(f'Роль:     {AUTHOR_INFO["role"]}')
+    print(f'Контакт:  {AUTHOR_INFO["contact"]}')
+
+def show_menu() -> None:
+    """Отображает главное меню программы."""
     print(f'\n=== КОНСОЛЬНЫЙ ФАЙЛОВЫЙ МЕНЕДЖЕР ===')
     print(f'Рабочая директория: {file_manager.get_work_dir()}')
     print('-------------------------------------')
@@ -26,43 +34,35 @@ def show_menu():
     print('0.  Выход')
     print('-------------------------------------')
 
+def main() -> None:
+    """Основной цикл программы."""
+    # Словарь команд (без пунктов 0 и 8)
+    commands = {
+        '1': file_manager.create_folder,
+        '2': file_manager.delete,
+        '3': file_manager.copy,
+        '4': file_manager.show_all,
+        '5': file_manager.show_folders,
+        '6': file_manager.show_files,
+        '7': file_manager.show_os_info,
+        '9': quiz.run,
+        '10': bank.run,
+        '11': file_manager.change_dir,
+    }
 
-def main():
     while True:
         show_menu()
         choice = input('Выберите пункт: ').strip()
 
-        if choice == '1':
-            file_manager.create_folder()
-        elif choice == '2':
-            file_manager.delete()
-        elif choice == '3':
-            file_manager.copy()
-        elif choice == '4':
-            file_manager.show_all()
-        elif choice == '5':
-            file_manager.show_folders()
-        elif choice == '6':
-            file_manager.show_files()
-        elif choice == '7':
-            file_manager.show_os_info()
-        elif choice == '8':
-            print(f'\n--- Создатель программы ---')
-            print(f'Имя:      {AUTHOR["name"]}')
-            print(f'Роль:     {AUTHOR["role"]}')
-            print(f'Контакт:  {AUTHOR["contact"]}')
-        elif choice == '9':
-            quiz.run()
-        elif choice == '10':
-            bank.run()
-        elif choice == '11':
-            file_manager.change_dir()
-        elif choice == '0':
+        if choice == '0':
             print('До свидания!')
             break
+        elif choice == '8':
+            show_author()
+        elif choice in commands:
+            commands[choice]()
         else:
             print('Неверный пункт, попробуйте снова.')
-
 
 if __name__ == '__main__':
     main()
